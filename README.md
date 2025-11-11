@@ -18,6 +18,9 @@ API para ser utilizada em prova para treinamento para worldskills modalidade pro
 
 ## Passos para executar localmente
 - 1 Clone este repositório
+```bash
+git clone https://github.com/wellifabio/x-french-api-2025.git
+```
 - 2 Abra com **VsCode** e abra um terminal `CTRL + "` do tipo `CMD` ou `bash`
 - 3 Instale as dependências
 ```bash
