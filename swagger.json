@@ -1,0 +1,307 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "X-FRENCH-API",
+        "version": "1.0.0",
+        "description": "Documentação da API X-FRENCH"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api",
+            "description": "Servidor local"
+        }
+    ],
+    "securityDefinitions": {
+        "bearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token para autenticação",
+            "scheme": "bearer",
+            "bearer format": "JWT",
+            "bearer token": "JWT <token>",
+            "bearer token description": "Bearer token para autenticação"
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearer format": "JWT"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Endpoints de autenticação"
+        },
+        {
+            "name": "Diary",
+            "description": "Endpoints para o diário"
+        },
+        {
+            "name": "Collection",
+            "description": "Endpoints para favoritos"
+        },
+        {
+            "name": "Arquivos Estáticos (imagens, json, etc)",
+            "description": "Endpoints de arquivos estáticos (imagens)"
+        }
+    ],
+    "paths": {
+        "/users/signin": {
+            "post": {
+                "summary": "Fazer Login",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "description": "Dados de criação",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "userEmailAddress": {
+                                        "type": "string",
+                                        "default": "username@email.com"
+                                    },
+                                    "userPassword": {
+                                        "type": "string",
+                                        "default": "123abc"
+                                    }
+                                },
+                                "required": [
+                                    "userEmailAddress",
+                                    "userPassword"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Acesso concedido"
+                    },
+                    "400": {
+                        "description": "Erro de envio de dados"
+                    }
+                }
+            }
+        },
+        "/users/register": {
+            "post": {
+                "summary": "Criar novo usuário",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "description": "Dados de criação",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "userEmailAddress": {
+                                        "type": "string",
+                                        "default": "user@email.com"
+                                    },
+                                    "userPassword": {
+                                        "type": "string",
+                                        "default": "senha123"
+                                    }
+                                },
+                                "required": [
+                                    "userEmailAddress",
+                                    "userPassword"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Criado com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro de envio de dados"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "summary": "Obter lista de usuários",
+                "tags": [
+                    "Auth"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            }
+        },
+        "/diary": {
+            "get": {
+                "summary": "Obter lista de diários",
+                "tags": [
+                    "Diary"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Criar diário",
+                "tags": [
+                    "Diary"
+                ],
+                "requestBody": {
+                    "description": "Dados de criação",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "diary_title": {
+                                        "type": "string",
+                                        "default": "Viagem pelo esplendor da arte francesa"
+                                    },
+                                    "diary_main_text": {
+                                        "type": "string",
+                                        "default": "resources/Musée d Orsay/d2.json"
+                                    },
+                                    "diary_upload_datetime": {
+                                        "type": "date",
+                                        "default": "2023-04-25T09:50:30.000Z"
+                                    },
+                                    "diary_image": {
+                                        "type": "string",
+                                        "default": "resources/Musée d Orsay/3.jpg"
+                                    },
+                                    "diary_upload_username": {
+                                        "type": "string",
+                                        "default": "Jake Clarke"
+                                    }
+                                },
+                                "required": [
+                                    "diary_title",
+                                    "diary_main_text",
+                                    "diary_upload_datetime",
+                                    "diary_image",
+                                    "diary_upload_username"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registrado com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro de envio de dados"
+                    }
+                }
+            }
+        },
+        "/diary/collection": {
+            "put": {
+                "summary": "Registrar favorito",
+                "tags": [
+                    "Collection"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dados de criação",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "diary_id": {
+                                        "type": "string",
+                                        "default": "BA23617D-42DA-8C4A-F569-C1915B9B55B1"
+                                    }
+                                },
+                                "required": [
+                                    "diary_id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registrado com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro de envio de dados"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Obter lista de favoritos",
+                "tags": [
+                    "Collection"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            }
+        },
+        "/{arquivo}": {
+            "get": {
+                "summary": "Diretório de arquivos estáticos (imagens)",
+                "tags": [
+                    "Arquivos Estáticos (imagens, json, etc)"
+                ],
+                "parameters": [
+                    {
+                        "name": "arquivo",
+                        "in": "path",
+                        "required": true,
+                        "default": "resources/Musée d Orsay/1.jpg",
+                        "description": "Nome e extensão do arquivo",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                }
+            }
+        }
+    }
+}

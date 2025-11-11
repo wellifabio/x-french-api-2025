@@ -1,0 +1,27 @@
+{
+  "name": "x-french-api-2025",
+  "version": "1.0.0",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "npx nodemon server.js"
+  },
+  "keywords": [],
+  "author": "wellifabio",
+  "license": "ISC",
+  "description": "API para ser utilizada em prova para treinamento para worldskills modalidade programação para dispositivos moveis",
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^13.0.0"
+  }
+}
